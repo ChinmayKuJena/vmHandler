@@ -4,10 +4,10 @@ name: EC2 Instance Management
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
   workflow_dispatch:  # Allow manual trigger via GitHub UI
 
 jobs:
