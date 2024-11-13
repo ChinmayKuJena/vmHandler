@@ -30,7 +30,7 @@ def launch_instance():
         MinCount=1,
         MaxCount=1,
         KeyName='test',  # Replace with your actual key pair name
-        SecurityGroupIds=['sg-056b2507b13e93c1c'],  # Replace with your security group ID (default works)
+        SecurityGroupIds=['sg-056b2507b13e93c1c'],  # Replace with your security group ID (default works) need to change
         TagSpecifications=[{
             'ResourceType': 'instance',
             'Tags': [{
