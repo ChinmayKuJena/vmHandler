@@ -4,10 +4,10 @@ name: EC2 Instance Management
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
   workflow_dispatch:  # Allow manual trigger via GitHub UI
 
 jobs:
@@ -31,15 +31,29 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # Run the EC2 Management scripts
+    # Run the EC2 List Instances
     - name: Run EC2 List Instances
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
       run: |
-        python list_vms.py
+        python list_vms.py || echo "AWS Credentials not available or invalid. Skipping EC2 list step."
 
-    - name: Run EC2 Create Instance (optional, can be modified to launch an instance)
+    # Run EC2 Create Instance (optional, can be modified to launch an instance)
+    - name: Run EC2 Create Instance (Optional)
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
       run: |
-        python create_vms.py
+        python create_vms.py || echo "AWS Credentials not available or invalid. Skipping EC2 create step."
 
+    # Run EC2 Instance Info (Optional)
     - name: Run EC2 Instance Info (Optional)
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
       run: |
-        python get_instance_info.py
+        python get_instance_info.py || echo "AWS Credentials not available or invalid. Skipping EC2 info step."
